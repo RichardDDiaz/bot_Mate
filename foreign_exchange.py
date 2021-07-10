@@ -34,10 +34,7 @@ class Foreign_exchange():
 
     def exchange_rate(self):
         responseChange = json.loads(requests.get(self.__api).text)
-        value_real = f'1 dollar in pesos are: {
-            responseChange["result"]["value"]} ARS'
-        value_taxes = f'1 dollar in pesos + full taxes are: {
-            str(float(responseChange["result"]["value"])
-                * Foreign_exchange.ACTUAL_TAXES)} ARS'
+        value_real = f'1 dollar in pesos are: {responseChange["result"]["value"]} ARS'
+        value_taxes = f'1 dollar in pesos + full taxes are: {str(float(responseChange["result"]["value"])*Foreign_exchange.ACTUAL_TAXES)} ARS'
 
         return f'{value_real} \n{value_taxes}'
