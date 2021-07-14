@@ -5,10 +5,11 @@ from prices_steam import steam_data
 
 bot = commands.Bot(command_prefix='_',
                    description="this is a BotMate", help_command=None)
+print("initializing the bot...")
 base_change = Foreign_exchange("USD", "ARS")
 base_steam = steam_data()
 base_steam.parser_Ids_Steam()
-
+print("ready...")
 
 @bot.event
 async def on_ready():
@@ -25,15 +26,27 @@ async def dollar(ctx):
 
 @bot.command(name="priceid")
 async def priceid(ctx, arg):
-    print("price_game_for_id.")
+    print(f"price_game_for_id: {str(arg)}")
     await ctx.send(base_steam.get_price_id(arg))
+
+
+@bot.command(name="pricename")
+async def pricename(ctx, *args):
+    args = list(args)
+    for pal in args:
+        pal = str(pal)
+    args = " ".join(args)
+    print(f"price_game_for_name: {args}")
+    await ctx.send(base_steam.get_price_name(args))
 
 
 @bot.command(name="help")
 async def help(ctx):
     text = """
     Commands Bot Mate:
-    > dollar: the bot says the price of the dollar in pesos
+    > dollar: says the price of the dollar in pesos
+    > priceid: says the price of a game by its id in steam
+    > pricename: says the price of a game by name on steam
     > help: list all commands
     > prefix: _
 
@@ -42,4 +55,4 @@ async def help(ctx):
     """
     await ctx.send(text)
 
-bot.run('here write your key')
+bot.run('ODYzMDUwNDE2NDEyMTY0MTM2.YOhQVQ.LyXWuks3VVDdqcILu8MbeREZOGI')

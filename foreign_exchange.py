@@ -21,7 +21,7 @@ class Foreign_exchange():
                 raise NotStatus200Exception("Failure GET Request")
 
         except Exception as e:
-            print(f'Exception - {e} , {type(e)}')
+            print(f'Exception - {e}, {type(e)}')
 
         print(f"class foreign_exchange {self.__conversion} created")
 
@@ -33,7 +33,11 @@ class Foreign_exchange():
         {self.__api}""")
 
     def exchange_rate(self):
-        responseChange = json.loads(requests.get(self.__api).text)
+        try:
+            responseChange = json.loads(requests.get(self.__api).text)
+        except Exception as e:
+            print(f'Exception - {e}, {type(e)}')
+            return "this moment the page to convert is no running, please try again later"
         value_real = f'1 dollar in pesos are: {responseChange["result"]["value"]} ARS'
         value_taxes = f'1 dollar in pesos + full taxes are: {str(float(responseChange["result"]["value"])*Foreign_exchange.ACTUAL_TAXES)} ARS'
 

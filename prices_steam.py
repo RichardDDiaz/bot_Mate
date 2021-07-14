@@ -20,7 +20,7 @@ class steam_data():
         steamData = {}
         try:
             responseSteam = requests.get(cls.API_STEAM_ID).text
-            # convert from str to json and extract data of the key:applist, finally
+            # convert str to json and extract data of the key:applist, finally
             # extract "list" of the key:apps -> finally, this is convert to
             # dictionary {}
             list_of_json = json.loads(responseSteam)["applist"]["apps"]
@@ -48,8 +48,7 @@ class steam_data():
             print("pasamos el json")
             result = self.parser_price(dataGameSteam)
         except Exception as e:
-            print(
-                f'Exception in class: steam_data-get_price_id - {e} , {type(e)}')
+            print(f'Exception in class: steam_data-get_price_id-{e}')
 
         return result
 
@@ -69,8 +68,7 @@ class steam_data():
                 requests.get(completeurl).text)[id_game]["data"]
             result = self.parser_price(dataGameSteam)
         except Exception as e:
-            print(
-                f'Exception in class: steam_data-get_price_name - {e} , {type(e)}')
+            print(f'Exception in class: steam_data-get_price_name-{e}')
 
         return result
 
@@ -86,29 +84,33 @@ class steam_data():
             for cate in dataGameSteam["categories"]:
                 categor += cate["description"] + " | "
 
-        result.append(
-            f'Name:{str(dataGameSteam["name"])}\n') if "name" in dataGameSteam else "the game was found but the name in the Api does not match"
-        result.append(
-            f'Current value: {str(dataGameSteam["price_overview"]["final_formatted"])}\n') if "price_overview" in dataGameSteam else 'unknown'
-        result.append(
-            "Spanish language: Yes\n" if (
-                "Español" in dataGameSteam["supported_languages"] or "Spanish" in dataGameSteam["supported_languages"]) else "No\n")
-        result.append(f'Genders: {gendrs}\n' if gendrs !=
-                      "| " else 'Gendres not available\n')
-        result.append(
-            f'Categories: {categor}\n' if categor != "| " else 'Categories not available\n')
+        if "name" in dataGameSteam:
+            result.append(f'Name:{str(dataGameSteam["name"])}\n')
+        
+        if "price_overview" in dataGameSteam:
+            result.append(f'Current value: {str(dataGameSteam["price_overview"]["final_formatted"])}\n')
+
+        if "Español" in dataGameSteam["supported_languages"] or "Spanish" in dataGameSteam["supported_languages"]:
+            result.append("Spanish language: Yes\n")
+        else:
+            result.append("Spanish language: No\n")
+
+        if gendrs != "| ":
+            result.append(f'Genders: {gendrs}\n')
+        else:
+            result.append('Categories not available\n')
+
+        if categor != "| ":
+            result.append(f'Categories: {categor}\n')
+        else:
+            result.append('Categories not available\n')
+
+        #result.append(f'Name:{str(dataGameSteam["name"])}\n') if "name" in dataGameSteam else "the game was found but the name in the Api does not match"
+        #result.append(f'Current value: {str(dataGameSteam["price_overview"]["final_formatted"])}\n') if "price_overview" in dataGameSteam else 'unknown'
+        #result.append("Spanish language: Yes\n" if ("Español" in dataGameSteam["supported_languages"] or "Spanish" in dataGameSteam["supported_languages"]) else "No\n")
+        #result.append(f'Genders: {gendrs}\n' if gendrs !=
+        #              "| " else 'Gendres not available\n')
+        #result.append(
+        #    f'Categories: {categor}\n' if categor != "| " else 'Categories not available\n')
+
         return "".join(result)
-
-
-"""
-test = steam_data()
-print(steam_data.games_ids)
-steam_data.parser_Ids_Steam()
-
-print("POR ID")
-print(test.get_price_id(203160))
-print("FIN ID")
-print("POR NAME")
-print(test.get_price_name("Tomb Raider"))
-print("FIN NAME")
-"""
