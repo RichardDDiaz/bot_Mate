@@ -69,4 +69,4 @@ async def help(ctx):
     await ctx.send(text)
 
 # Your token here. Extract from Discord developers
-bot.run('ODYzMDUwNDE2NDEyMTY0MTM2.YOhQVQ.LyXWuks3VVDdqcILu8MbeREZOGI')
+bot.run('paste your token here')
