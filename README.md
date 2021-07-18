@@ -37,7 +37,7 @@ $python3 main.ṕy
 ```
 
 ## References
-[discord library for python](https://pypi.org/project/discord.py/)
-[API steam](http://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=STEAMKEY&format=json)
-[cambio today](https://cambio.today/), pagina de divisas de monedas
+- [discord library for python](https://pypi.org/project/discord.py/).
+- [API steam](http://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=STEAMKEY&format=json).
+- [cambio today](https://cambio.today/), currency currency page.
 
