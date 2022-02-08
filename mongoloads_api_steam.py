@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import os
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 
@@ -141,6 +142,9 @@ def load_data():
             print(f"add id game: {id_game}")
         except Exception as e:
             print(f'Exception mongoDB - {e} , {type(e)}, id_game: {id_game}')
+            with open ("log.txt", "w") as text_file:
+                text_file.write(f"Exception mongoDB - {e} , {type(e)}, id_game: {id_game}" + os.linesep)
+                text_file.write("-"* 80 + os.linesep)
             continue
         time.sleep(0.0 if (time.time() - inicio) >= 1.57 else 1.57 - (time.time() - inicio))
 
